@@ -33,12 +33,14 @@ class OrderServiceTest {
 
     @BeforeEach
     void setUp() {
+        // Inicializa un cliente y un producto base para las pruebas
         customer = new Customer("John Doe", "john@example.com");
         product = new Product("Laptop", 1200.0, 10);
     }
 
     @Test
     void shouldReturnAllOrders() {
+        // Verifica que el servicio retorna la lista completa de órdenes
         when(orderRepository.findAll()).thenReturn(List.of(new OrderEntity()));
 
         List<OrderEntity> result = orderService.findAll();
@@ -49,6 +51,7 @@ class OrderServiceTest {
 
     @Test
     void shouldFindOrderById() {
+        // Verifica que se retorne correctamente una orden existente
         OrderEntity order = new OrderEntity(customer, product, 2);
         when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
 
@@ -59,6 +62,7 @@ class OrderServiceTest {
 
     @Test
     void shouldThrowWhenOrderNotFound() {
+        // Si la orden no existe, se debe lanzar una excepción
         when(orderRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class, () -> orderService.findById(1L));
@@ -66,6 +70,12 @@ class OrderServiceTest {
 
     @Test
     void shouldCreateOrderSuccessfully() {
+        // Prueba del flujo completo de creación de una orden:
+        // - Cliente existe
+        // - Producto existe
+        // - Stock suficiente
+        // - Cliente con menos de 5 órdenes previas
+
         long customerId = 1L;
         long productId = 2L;
         int quantity = 3;
@@ -79,7 +89,7 @@ class OrderServiceTest {
 
         assertNotNull(result);
         assertEquals(quantity, result.getQuantity());
-        assertEquals(7, product.getStock()); // 10 - 3
+        assertEquals(7, product.getStock()); // Se reduce el stock: 10 - 3
 
         verify(productRepository).save(product);
         verify(orderRepository).save(result);
@@ -87,6 +97,7 @@ class OrderServiceTest {
 
     @Test
     void shouldThrowIfQuantityInvalid() {
+        // Si la cantidad es menor o igual que cero, debe lanzar excepción
         assertThrows(RuntimeException.class, () ->
                 orderService.create(1L, 2L, 0)
         );
@@ -94,6 +105,7 @@ class OrderServiceTest {
 
     @Test
     void shouldThrowIfStockIsNotEnough() {
+        // Si el producto no tiene suficiente stock, debe lanzarse excepción
         product.setStock(2);
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         when(productRepository.findById(2L)).thenReturn(Optional.of(product));
@@ -105,6 +117,7 @@ class OrderServiceTest {
 
     @Test
     void shouldThrowIfCustomerHasMoreThanFiveOrders() {
+        // Si el cliente ya tiene 5 o más órdenes, no se permite crear una nueva orden
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         when(productRepository.findById(2L)).thenReturn(Optional.of(product));
         when(orderRepository.countByCustomer(customer)).thenReturn(5L);
@@ -116,6 +129,7 @@ class OrderServiceTest {
 
     @Test
     void shouldDeleteOrder() {
+        // Verifica que el servicio invoque la eliminación del pedido por ID
         orderService.delete(1L);
         verify(orderRepository).deleteById(1L);
     }
