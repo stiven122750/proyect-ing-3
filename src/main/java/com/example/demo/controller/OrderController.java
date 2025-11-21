@@ -12,18 +12,33 @@ import java.util.Map;
 @RequestMapping("/api/orders")
 public class OrderController {
     private final OrderService service;
-    public OrderController(OrderService service) { this.service = service; }
 
-    @GetMapping public List<OrderEntity> all() { return service.findAll(); }
-    @GetMapping("/<built-in function id>") public ResponseEntity<OrderEntity> get(@PathVariable Long id) { return ResponseEntity.ok(service.findById(id)); }
+    public OrderController(OrderService service) {
+        this.service = service;
+    }
+
+    @GetMapping
+    public List<OrderEntity> all() {
+        return service.findAll();
+    }
+
+    @GetMapping("/<built-in function id>")
+    public ResponseEntity<OrderEntity> get(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(id));
+    }
 
     // create expects JSON: {"customerId":1,"productId":2,"quantity":3}
-    @PostMapping public OrderEntity create(@RequestBody Map<String, Object> body) {
+    @PostMapping
+    public OrderEntity create(@RequestBody Map<String, Object> body) {
         Long customerId = Long.valueOf(String.valueOf(body.get("customerId")));
         Long productId = Long.valueOf(String.valueOf(body.get("productId")));
         int qty = Integer.parseInt(String.valueOf(body.get("quantity")));
         return service.create(customerId, productId, qty);
     }
 
-    @DeleteMapping("/<built-in function id>") public ResponseEntity<Void> delete(@PathVariable Long id) { service.delete(id); return ResponseEntity.noContent().build(); }
+    @DeleteMapping("/<built-in function id>")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -11,11 +11,34 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
     private final ProductService service;
-    public ProductController(ProductService service) { this.service = service; }
 
-    @GetMapping public List<Product> all() { return service.findAll(); }
-    @GetMapping("/<built-in function id>") public ResponseEntity<Product> get(@PathVariable Long id) { return service.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build()); }
-    @PostMapping public Product create(@RequestBody Product p) { return service.create(p); }
-    @PutMapping("/<built-in function id>") public Product update(@PathVariable Long id, @RequestBody Product p) { return service.update(id, p); }
-    @DeleteMapping("/<built-in function id>") public ResponseEntity<Void> delete(@PathVariable Long id) { service.delete(id); return ResponseEntity.noContent().build(); }
+    public ProductController(ProductService service) {
+        this.service = service;
+    }
+
+    @GetMapping
+    public List<Product> all() {
+        return service.findAll();
+    }
+
+    @GetMapping("/<built-in function id>")
+    public ResponseEntity<Product> get(@PathVariable Long id) {
+        return service.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public Product create(@RequestBody Product p) {
+        return service.create(p);
+    }
+
+    @PutMapping("/<built-in function id>")
+    public Product update(@PathVariable Long id, @RequestBody Product p) {
+        return service.update(id, p);
+    }
+
+    @DeleteMapping("/<built-in function id>")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
