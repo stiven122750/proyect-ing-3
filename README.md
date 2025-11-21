@@ -8,6 +8,7 @@ El objetivo principal es demostrar la implementación de una API REST con **lóg
 ## 🧩 Arquitectura del Proyecto
 
 - **Backend:** Spring Boot 3
+- **Java Version:** Java 17
 - **Dependencias principales:**
   - Spring Web
   - Spring Data JPA
