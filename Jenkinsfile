@@ -4,13 +4,14 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/TU_USUARIO/TU_REPO.git', branch: 'main'
+                git url: 'https://github.com/stiven122750/proyect-ing-3', branch: 'main'
             }
         }
 
         stage('Test') {
             steps {
-                sh "./gradlew clean test"
+                sh 'chmod +x gradlew'
+                sh './gradlew clean test'
             }
             post {
                 always {
