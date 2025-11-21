@@ -22,12 +22,56 @@
       "aiTool": "AI Assistant",
       "detectionMethod": "REALTIME_SPEED_ANALYSIS",
       "lineCount": 119
+    },
+    {
+      "filePath": "C:/Users/stev1/OneDrive/Escritorio/proyect-ing-3/src/test/java/com/example/demo/service/CustomerServiceTest.java",
+      "timestamp": 1763739377594,
+      "startOffset": 0,
+      "endOffset": 72,
+      "codeContent": "package com.example.demo.service;\n\npublic class CustomerServiceTest {\n}\n",
+      "aiProbability": 90,
+      "aiTool": "AI Assistant",
+      "detectionMethod": "REALTIME_SPEED_ANALYSIS",
+      "lineCount": 5
+    },
+    {
+      "filePath": "C:/Users/stev1/OneDrive/Escritorio/proyect-ing-3/src/test/java/com/example/demo/service/CustomerServiceTest.java",
+      "timestamp": 1763739384825,
+      "startOffset": 35,
+      "endOffset": 3532,
+      "codeContent": "import com.example.demo.model.Customer;\nimport com.example.demo.repository.CustomerRepository;\nimport com.example.demo.repository.OrderRepository;\nimport org.junit.jupiter.api.BeforeEach;\nimport org.junit.jupiter.api.Test;\nimport org.mockito.InjectMocks;\nimport org.mockito.Mock;\nimport org.mockito.junit.jupiter.MockitoExtension;\nimport org.junit.jupiter.api.extension.ExtendWith;\n\nimport java.util.Optional;\nimport java.util.List;\n\nimport static org.junit.jupiter.api.Assertions.*;\nimport static org.mockito.Mockito.*;\n\n@ExtendWith(MockitoExtension.class)\nclass CustomerServiceTest {\n\n    @Mock\n    private CustomerRepository customerRepository;\n    \n    @Mock\n    private OrderRepository orderRepository;\n\n    @InjectMocks\n    private CustomerService customerService;\n\n    private Customer customer;\n\n    @BeforeEach\n    void setup() {\n        customer \u003d new Customer(\"John Doe\", \"john@example.com\");\n    }\n\n    @Test\n    void shouldReturnAllCustomers() {\n        when(customerRepository.findAll()).thenReturn(List.of(customer));\n\n        List\u003cCustomer\u003e result \u003d customerService.findAll();\n\n        assertEquals(1, result.size());\n        verify(customerRepository).findAll();\n    }\n\n    @Test\n    void shouldFindCustomerById() {\n        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));\n\n        Optional\u003cCustomer\u003e result \u003d customerService.findById(1L);\n\n        assertTrue(result.isPresent());\n        assertEquals(customer, result.get());\n    }\n\n    @Test\n    void shouldCreateCustomerSuccessfully() {\n        when(customerRepository.save(customer)).thenReturn(customer);\n\n        Customer result \u003d customerService.create(customer);\n\n        assertEquals(customer, result);\n        verify(customerRepository).save(customer);\n    }\n\n    @Test\n    void shouldUpdateCustomerSuccessfully() {\n        Customer updated \u003d new Customer(\"New Name\", \"new@example.com\");\n\n        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));\n        when(customerRepository.save(any(Customer.class))).thenAnswer(invocation -\u003e invocation.getArgument(0));\n\n        Customer result \u003d customerService.update(1L, updated);\n\n        assertEquals(\"New Name\", result.getName());\n        assertEquals(\"new@example.com\", result.getEmail());\n        verify(customerRepository).save(customer);\n    }\n\n    @Test\n    void shouldThrowWhenCustomerNotFoundForUpdate() {\n        when(customerRepository.findById(1L)).thenReturn(Optional.empty());\n\n        assertThrows(RuntimeException.class,\n                () -\u003e customerService.update(1L, new Customer()));\n    }\n\n    @Test\n    void shouldDeleteCustomerSuccessfully() {\n        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));\n        when(orderRepository.countByCustomer(customer)).thenReturn(0L);\n\n        customerService.delete(1L);\n\n        verify(customerRepository).deleteById(1L);\n    }\n\n    @Test\n    void shouldThrowWhenDeletingCustomerWithOrders() {\n        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));\n        when(orderRepository.countByCustomer(customer)).thenReturn(3L);\n\n        assertThrows(RuntimeException.class,\n                () -\u003e customerService.delete(1L));\n\n        verify(customerRepository, never()).deleteById(any());\n    }\n\n    @Test\n    void shouldThrowWhenDeletingNonExistingCustomer() {\n        when(customerRepository.findById(1L)).thenReturn(Optional.empty());\n\n        assertThrows(RuntimeException.class, () -\u003e customerService.delete(1L));\n    }",
+      "aiProbability": 90,
+      "aiTool": "AI Assistant",
+      "detectionMethod": "REALTIME_SPEED_ANALYSIS",
+      "lineCount": 114
+    },
+    {
+      "filePath": "C:/Users/stev1/OneDrive/Escritorio/proyect-ing-3/src/test/java/com/example/demo/service/CategoryServiceTest.java",
+      "timestamp": 1763739435876,
+      "startOffset": 0,
+      "endOffset": 72,
+      "codeContent": "package com.example.demo.service;\n\npublic class CategoryServiceTest {\n}\n",
+      "aiProbability": 90,
+      "aiTool": "AI Assistant",
+      "detectionMethod": "REALTIME_SPEED_ANALYSIS",
+      "lineCount": 5
+    },
+    {
+      "filePath": "C:/Users/stev1/OneDrive/Escritorio/proyect-ing-3/src/test/java/com/example/demo/service/CategoryServiceTest.java",
+      "timestamp": 1763739444095,
+      "startOffset": 35,
+      "endOffset": 2533,
+      "codeContent": "import com.example.demo.model.Category;\nimport com.example.demo.repository.CategoryRepository;\nimport org.junit.jupiter.api.BeforeEach;\nimport org.junit.jupiter.api.Test;\nimport org.mockito.InjectMocks;\nimport org.mockito.Mock;\nimport org.mockito.junit.jupiter.MockitoExtension;\nimport org.junit.jupiter.api.extension.ExtendWith;\n\nimport java.util.List;\nimport java.util.Optional;\n\nimport static org.junit.jupiter.api.Assertions.*;\nimport static org.mockito.Mockito.*;\n\n@ExtendWith(MockitoExtension.class)\nclass CategoryServiceTest {\n\n    @Mock\n    private CategoryRepository categoryRepository;\n\n    @InjectMocks\n    private CategoryService categoryService;\n\n    private Category category;\n\n    @BeforeEach\n    void setup() {\n        category \u003d new Category(\"Electronics\");\n    }\n\n    @Test\n    void shouldReturnAllCategories() {\n        when(categoryRepository.findAll()).thenReturn(List.of(category));\n\n        List\u003cCategory\u003e result \u003d categoryService.findAll();\n\n        assertEquals(1, result.size());\n        verify(categoryRepository).findAll();\n    }\n\n    @Test\n    void shouldReturnCategoryById() {\n        when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));\n\n        Optional\u003cCategory\u003e result \u003d categoryService.findById(1L);\n\n        assertTrue(result.isPresent());\n        assertEquals(category, result.get());\n    }\n\n    @Test\n    void shouldCreateCategorySuccessfully() {\n        when(categoryRepository.save(category)).thenReturn(category);\n\n        Category result \u003d categoryService.create(category);\n\n        assertEquals(category, result);\n        verify(categoryRepository).save(category);\n    }\n\n    @Test\n    void shouldUpdateCategorySuccessfully() {\n        Category updated \u003d new Category(\"New Name\");\n\n        when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));\n        when(categoryRepository.save(any(Category.class))).thenAnswer(i -\u003e i.getArgument(0));\n\n        Category result \u003d categoryService.update(1L, updated);\n\n        assertEquals(\"New Name\", result.getName());\n        verify(categoryRepository).save(category);\n    }\n\n    @Test\n    void shouldThrowWhenUpdatingNonExistingCategory() {\n        when(categoryRepository.findById(1L)).thenReturn(Optional.empty());\n\n        assertThrows(RuntimeException.class,\n                () -\u003e categoryService.update(1L, new Category()));\n    }\n\n    @Test\n    void shouldDeleteSuccessfully() {\n        categoryService.delete(1L);\n\n        verify(categoryRepository).deleteById(1L);\n    }",
+      "aiProbability": 90,
+      "aiTool": "AI Assistant",
+      "detectionMethod": "REALTIME_SPEED_ANALYSIS",
+      "lineCount": 88
     }
   ],
   "toolStats": {
     "AI Assistant": {
-      "usageCount": 2,
-      "totalLines": 124
+      "usageCount": 6,
+      "totalLines": 336
     }
   }
 }
