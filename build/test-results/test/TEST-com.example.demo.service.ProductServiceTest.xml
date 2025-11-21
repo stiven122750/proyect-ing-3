@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.demo.service.ProductServiceTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2025-11-21T14:55:54" hostname="NITRO" time="1.563">
+  <properties/>
+  <testcase name="update_ShouldModifyAndSaveProduct_WhenValid()" classname="com.example.demo.service.ProductServiceTest" time="1.491"/>
+  <testcase name="update_ShouldThrowException_WhenPriceInvalid()" classname="com.example.demo.service.ProductServiceTest" time="0.007"/>
+  <testcase name="findAll_ShouldReturnProductList()" classname="com.example.demo.service.ProductServiceTest" time="0.005"/>
+  <testcase name="create_ShouldThrowException_WhenNameExists()" classname="com.example.demo.service.ProductServiceTest" time="0.005"/>
+  <testcase name="findById_ShouldReturnProduct_WhenExists()" classname="com.example.demo.service.ProductServiceTest" time="0.006"/>
+  <testcase name="update_ShouldThrowException_WhenProductNotFound()" classname="com.example.demo.service.ProductServiceTest" time="0.005"/>
+  <testcase name="create_ShouldSaveProduct_WhenValid()" classname="com.example.demo.service.ProductServiceTest" time="0.01"/>
+  <testcase name="create_ShouldThrowException_WhenPriceIsInvalid()" classname="com.example.demo.service.ProductServiceTest" time="0.005"/>
+  <testcase name="delete_ShouldDeleteProductById()" classname="com.example.demo.service.ProductServiceTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\stev1\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.11\f9cb566608fbac6bc7bf54901a7aa11543a989ee\byte-buddy-agent-1.14.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>
