@@ -1,0 +1,33 @@
+{
+  "version": "1.0",
+  "records": [
+    {
+      "filePath": "C:/Users/stev1/OneDrive/Escritorio/proyect-ing-3/src/test/java/com/example/demo/service/OrderServiceTest.java",
+      "timestamp": 1763739121618,
+      "startOffset": 0,
+      "endOffset": 69,
+      "codeContent": "package com.example.demo.service;\n\npublic class OrderServiceTest {\n}\n",
+      "aiProbability": 90,
+      "aiTool": "AI Assistant",
+      "detectionMethod": "REALTIME_SPEED_ANALYSIS",
+      "lineCount": 5
+    },
+    {
+      "filePath": "C:/Users/stev1/OneDrive/Escritorio/proyect-ing-3/src/test/java/com/example/demo/service/OrderServiceTest.java",
+      "timestamp": 1763739125729,
+      "startOffset": 35,
+      "endOffset": 3851,
+      "codeContent": "import com.example.demo.model.Customer;\nimport com.example.demo.model.OrderEntity;\nimport com.example.demo.model.Product;\nimport com.example.demo.repository.CustomerRepository;\nimport com.example.demo.repository.OrderRepository;\nimport com.example.demo.repository.ProductRepository;\nimport org.junit.jupiter.api.BeforeEach;\nimport org.junit.jupiter.api.Test;\nimport org.mockito.InjectMocks;\nimport org.mockito.Mock;\nimport org.mockito.junit.jupiter.MockitoExtension;\nimport org.junit.jupiter.api.extension.ExtendWith;\n\nimport java.util.Optional;\nimport java.util.List;\n\nimport static org.junit.jupiter.api.Assertions.*;\nimport static org.mockito.Mockito.*;\n\n@ExtendWith(MockitoExtension.class)\nclass OrderServiceTest {\n\n    @Mock private OrderRepository orderRepository;\n    @Mock private ProductRepository productRepository;\n    @Mock private CustomerRepository customerRepository;\n\n    @InjectMocks private OrderService orderService;\n\n    private Customer customer;\n    private Product product;\n\n    @BeforeEach\n    void setUp() {\n        customer \u003d new Customer(\"John Doe\", \"john@example.com\");\n        product \u003d new Product(\"Laptop\", 1200.0, 10);\n    }\n\n    @Test\n    void shouldReturnAllOrders() {\n        when(orderRepository.findAll()).thenReturn(List.of(new OrderEntity()));\n\n        List\u003cOrderEntity\u003e result \u003d orderService.findAll();\n\n        assertEquals(1, result.size());\n        verify(orderRepository).findAll();\n    }\n\n    @Test\n    void shouldFindOrderById() {\n        OrderEntity order \u003d new OrderEntity(customer, product, 2);\n        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));\n\n        OrderEntity result \u003d orderService.findById(1L);\n\n        assertEquals(order, result);\n    }\n\n    @Test\n    void shouldThrowWhenOrderNotFound() {\n        when(orderRepository.findById(1L)).thenReturn(Optional.empty());\n\n        assertThrows(RuntimeException.class, () -\u003e orderService.findById(1L));\n    }\n\n    @Test\n    void shouldCreateOrderSuccessfully() {\n        long customerId \u003d 1L;\n        long productId \u003d 2L;\n        int quantity \u003d 3;\n\n        when(customerRepository.findById(customerId)).thenReturn(Optional.of(customer));\n        when(productRepository.findById(productId)).thenReturn(Optional.of(product));\n        when(orderRepository.countByCustomer(customer)).thenReturn(2L);\n        when(orderRepository.save(any(OrderEntity.class))).thenAnswer(invocation -\u003e invocation.getArgument(0));\n\n        OrderEntity result \u003d orderService.create(customerId, productId, quantity);\n\n        assertNotNull(result);\n        assertEquals(quantity, result.getQuantity());\n        assertEquals(7, product.getStock()); // 10 - 3\n\n        verify(productRepository).save(product);\n        verify(orderRepository).save(result);\n    }\n\n    @Test\n    void shouldThrowIfQuantityInvalid() {\n        assertThrows(RuntimeException.class, () -\u003e\n            orderService.create(1L, 2L, 0)\n        );\n    }\n\n    @Test\n    void shouldThrowIfStockIsNotEnough() {\n        product.setStock(2);\n        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));\n        when(productRepository.findById(2L)).thenReturn(Optional.of(product));\n\n        assertThrows(RuntimeException.class, () -\u003e\n            orderService.create(1L, 2L, 3)\n        );\n    }\n\n    @Test\n    void shouldThrowIfCustomerHasMoreThanFiveOrders() {\n        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));\n        when(productRepository.findById(2L)).thenReturn(Optional.of(product));\n        when(orderRepository.countByCustomer(customer)).thenReturn(5L);\n\n        assertThrows(RuntimeException.class, () -\u003e\n            orderService.create(1L, 2L, 1)\n        );\n    }\n\n    @Test\n    void shouldDeleteOrder() {\n        orderService.delete(1L);\n        verify(orderRepository).deleteById(1L);\n    }",
+      "aiProbability": 90,
+      "aiTool": "AI Assistant",
+      "detectionMethod": "REALTIME_SPEED_ANALYSIS",
+      "lineCount": 119
+    }
+  ],
+  "toolStats": {
+    "AI Assistant": {
+      "usageCount": 2,
+      "totalLines": 124
+    }
+  }
+}

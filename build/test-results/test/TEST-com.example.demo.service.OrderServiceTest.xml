@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.demo.service.OrderServiceTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2025-11-21T15:32:35" hostname="NITRO" time="1.528">
+  <properties/>
+  <testcase name="shouldFindOrderById()" classname="com.example.demo.service.OrderServiceTest" time="1.462"/>
+  <testcase name="shouldCreateOrderSuccessfully()" classname="com.example.demo.service.OrderServiceTest" time="0.027"/>
+  <testcase name="shouldDeleteOrder()" classname="com.example.demo.service.OrderServiceTest" time="0.003"/>
+  <testcase name="shouldThrowIfCustomerHasMoreThanFiveOrders()" classname="com.example.demo.service.OrderServiceTest" time="0.006"/>
+  <testcase name="shouldThrowIfQuantityInvalid()" classname="com.example.demo.service.OrderServiceTest" time="0.004"/>
+  <testcase name="shouldReturnAllOrders()" classname="com.example.demo.service.OrderServiceTest" time="0.005"/>
+  <testcase name="shouldThrowIfStockIsNotEnough()" classname="com.example.demo.service.OrderServiceTest" time="0.005"/>
+  <testcase name="shouldThrowWhenOrderNotFound()" classname="com.example.demo.service.OrderServiceTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\stev1\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.11\f9cb566608fbac6bc7bf54901a7aa11543a989ee\byte-buddy-agent-1.14.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>
